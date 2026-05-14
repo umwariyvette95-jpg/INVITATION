@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ange & Arsene — Wedding 2026</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+<style>
+:root{
+  --gold:#c9a84c;
+  --gold-light:#e8d4a0;
+  --cream:#fdf8f0;
+  --blush:#f7e8e8;
+  --deep:#1a1014;
+  --rose:#b05070;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  margin:0;
+  background:var(--cream);
+  color:var(--deep);
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+.script{font-family:'Great Vibes',cursive;}
+.serif{font-family:'Cormorant Garamond',serif;}
+
+/* HERO INLINE FIX */
+.hero-note{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  color:var(--gold-light);
+  font-size:16px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+
+.btn{
+  padding:12px 28px;
+  border-radius:4px;
+  text-decoration:none;
+  font-size:13px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  font-family:'Jost',sans-serif;
+  display:inline-block;
+}
+
+.btn-primary{background:var(--gold);color:var(--deep);}
+.btn-outline{border:1px solid rgba(255,255,255,.5);color:#fff;}
+
+.music-box{
+  display:none;
+  position:fixed;
+  bottom:90px;
+  right:24px;
+  z-index:1000;
+  width:320px;
+  max-width:90vw;
+}
+
+/* everything else unchanged below */
+.petal-wrap{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;overflow:hidden;}
+.petal{position:absolute;top:-40px;width:12px;height:16px;border-radius:50% 0 50% 0;opacity:.7;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(-40px)}100%{transform:translateY(110vh)}}
+
+.heart-float{position:fixed;bottom:-50px;font-size:18px;animation:floatUp linear infinite;pointer-events:none;z-index:998;}
+
+@keyframes floatUp{0%{transform:translateY(0)}100%{transform:translateY(-110vh)}}
+
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+#hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(26,16,20,.38),rgba(26,16,20,.8));
+}
+#hero-bg{
+  position:absolute;
+  inset:0;
+  background:url('image/7aa.jpeg') center/cover no-repeat;
+}
+.hero-content{position:relative;z-index:2}
+
+.hero-names{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(52px,12vw,110px);
+  color:#fff;
+}
+
+.hero-tagline{color:var(--gold-light);font-style:italic}
+
+section{padding:80px 24px;}
+
+.sec-label{
+  font-size:11px;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  color:var(--gold);
+}
+
+.sec-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(36px,7vw,64px);
+}
+
+/* music button */
+#music-btn{
+  position:fixed;
+  bottom:28px;
+  right:24px;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:var(--deep);
+  border:1px solid var(--gold);
+  color:var(--gold);
+  cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- petals -->
+<div class="petal-wrap" id="petals"></div>
+<div id="hearts"></div>
+
+<!-- music -->
+<button id="music-btn" onclick="toggleMusic()">♪</button>
+
+<div id="spotify-player" class="music-box">
+  <iframe
+    src="https://open.spotify.com/embed/track/6qqrTXSdwiJaq8SO0X2lSe"
+    width="100%" height="152" frameborder="0">
+  </iframe>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div id="hero-bg"></div>
+
+  <div class="hero-content">
+    <p class="hero-note">Together forever</p>
+
+    <h1 class="hero-names">Ange & Arsene</h1>
+
+    <p class="hero-tagline">Two hearts, one story</p>
+
+    <div class="btn-wrap">
+      <a class="btn btn-primary" href="#events">View Events</a>
+      <a class="btn btn-outline" href="#rsvp">RSVP</a>
+    </div>
+  </div>
+</section>
+
+<script>
+// petals
+const wrap=document.getElementById('petals');
+for(let i=0;i<20;i++){
+  const p=document.createElement('div');
+  p.className='petal';
+  p.style.left=Math.random()*100+'vw';
+  p.style.background=['#f9c4c4','#f5b8d0','#fde4e4'][Math.floor(Math.random()*3)];
+  p.style.animationDuration=(6+Math.random()*8)+'s';
+  wrap.appendChild(p);
+}
+
+// hearts
+setInterval(()=>{
+  const h=document.createElement('div');
+  h.className='heart-float';
+  h.textContent='♥';
+  h.style.left=Math.random()*100+'vw';
+  document.getElementById('hearts').appendChild(h);
+  setTimeout(()=>h.remove(),10000);
+},2000);
+
+// music
+let playing=false;
+function toggleMusic(){
+  const box=document.getElementById('spotify-player');
+  const btn=document.getElementById('music-btn');
+  playing=!playing;
+  box.style.display=playing?'block':'none';
+  btn.textContent=playing?'♫':'♪';
+}
+</script>
+
+</body>
+</html>
